@@ -1,0 +1,54 @@
+﻿@page "/"
+@using DragAndDropPoc.Components.Pages.Models
+
+<DragAndDropTracker Debug="true">
+    <Droppable Objects="_containers">
+        @foreach (var container in _containers)
+        {
+            <Draggable @key="container.Id" Object="container">
+                @container.Name
+                <Droppable Objects="container.ChildContainers">
+                    @foreach (var childContainer in container.ChildContainers)
+                    {
+                        <div>
+                            @childContainer.Name
+                        </div>
+                    }
+                </Droppable>
+                <Droppable Objects="container.Items">
+                    @foreach (var item in container.Items)
+                    {
+                        <Draggable @key="item.Id" Object="item" StopPropagation="true">
+                            @item.Name
+                        </Draggable>
+                    }
+                </Droppable>
+            </Draggable>
+        }
+    </Droppable>
+</DragAndDropTracker>
+
+@code
+{
+    private readonly List<Container> _containers =
+    [
+        new("Container 1")
+        {
+            Items =
+            [
+                new Item("Item 1"),
+                new Item("Item 2"),
+                new Item("Item 3")
+            ]
+        },
+        new("Container 2")
+        {
+            Items =
+            [
+                new Item("Item 4"),
+                new Item("Item 5"),
+                new Item("Item 6")
+            ]
+        }
+        ];
+}

@@ -1,0 +1,28 @@
+﻿@page "/2"
+
+<div class="d-flex gap-3">
+    <div class="border border-primary p-3 @GetCssClass(_container1)" ondragover="event.preventDefault();" @ondrop="() => HandleDrop(_container1)">
+        <h3>Container 1</h3>
+        @foreach (var item in _container1.Items)
+        {
+            <div class="border border-secondary mt-3 p-2" draggable="true" @key="item.Id" @ondragstart="() => HandleDragStart(_container1, item)">
+                <b>@item.Name</b>
+            </div>
+        }
+    </div>
+    <div class="border border-primary p-3 @GetCssClass(_container2)" ondragover="event.preventDefault();" @ondrop="() => HandleDrop(_container2)">
+        <h3>Container 2</h3>
+        @foreach (var item in _container2.Items)
+        {
+            <div class="border border-secondary mt-3 p-2" @ondragstart="() => HandleDragStart(_container2, item)" @key="item.Id" draggable="true">
+                <b>@item.Name</b>
+            </div>
+        }
+    </div>
+</div>
+
+<style type="text/css">
+    .drag-active {
+        border-style: dashed;
+    }
+</style>
